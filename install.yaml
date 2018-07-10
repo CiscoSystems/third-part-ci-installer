@@ -1,24 +1,22 @@
 ---
 - hosts: localhost
+  vars:
+    roles:
+      - name: ansible-role-zookeeper
+        repo: https://github.com/openstack/ansible-role-zookeeper
+      - name: ansible-role-diskimage-builder
+        repo: https://github.com/openstack/ansible-role-diskimage-builder
+      - name: ansible-role-nodepool
+        repo: https://github.com/openstack/ansible-role-nodepool
+      - name: ansible-role-zuul
+        repo: https://github.com/openstack/ansible-role-zuul
   tasks:
     - name: Fetch role
       git:
-        repo: "{{item.value}}"
-        dest: "/opt/{{item.key}}"
-      with_dict:
-        ansible-role-zuul: https://github.com/openstack/ansible-role-zuul
-        ansible-role-nodepool: https://github.com/openstack/ansible-role-nodepool
-        ansible-role-zookeeper: https://github.com/openstack/ansible-role-zookeeper
-        ansible-role-diskimage-builder: https://github.com/openstack/ansible-role-diskimage-builder
+        repo: "{{item.repo}}"
+        dest: "/opt/{{item.name}}"
+      with_items: "{{ roles }}"
 
     - include_role:
-        name: /opt/ansible-role-zookeeper
-
-    - include-role:
-        name: /opt/ansible-role-diskimage-builder
-
-    - include_role:
-        name: /opt/ansible-role-nodepool
-
-    - include_role:
-        name: /opt/ansible-role-zuul
+        name: "/opt/{{ item.name }}"
+      with_items: "{{ roles }}"
