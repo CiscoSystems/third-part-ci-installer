@@ -9,9 +9,13 @@
         ansible-role-zuul: https://github.com/openstack/ansible-role-zuul
         ansible-role-nodepool: https://github.com/openstack/ansible-role-nodepool
         ansible-role-zookeeper: https://github.com/openstack/ansible-role-zookeeper
+        ansible-role-diskimage-builder: https://github.com/openstack/ansible-role-diskimage-builder
 
     - include_role:
         name: /opt/ansible-role-zookeeper
+
+    - include-role:
+        name: /opt/ansible-role-diskimage-builder
 
     - include_role:
         name: /opt/ansible-role-nodepool
