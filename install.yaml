@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Fetch role
+      git:
+        repo: "{{item.value}}"
+        dest: "/opt/{{item.key}}"
+      with_dict:
+        ansible-role-zuul: https://github.com/openstack/ansible-role-zuul
+        ansible-role-nodepool: https://github.com/openstack/ansible-role-nodepool
+        ansible-role-zookeeper: https://github.com/openstack/ansible-role-zookeeper
+
+    - include_role:
+        name: /opt/ansible-role-zookeeper
+
+    - include_role:
+        name: /opt/ansible-role-nodepool
+
+    - include_role:
+        name: /opt/ansible-role-zuul
