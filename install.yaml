@@ -10,13 +10,14 @@
         repo: https://github.com/openstack/ansible-role-nodepool
       - name: ansible-role-zuul
         repo: https://github.com/openstack/ansible-role-zuul
+    nodepool_install_method: git
   tasks:
     - name: Fetch role
       git:
         repo: "{{item.repo}}"
-        dest: "/opt/{{item.name}}"
+        dest: "{{ ansible_env.HOME }}/{{item.name}}"
       with_items: "{{ roles }}"
 
     - include_role:
-        name: "/opt/{{ item.name }}"
+        name: "{{ ansible_env.HOME }}/{{item.name}}"
       with_items: "{{ roles }}"
