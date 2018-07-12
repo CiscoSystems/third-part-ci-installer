@@ -141,7 +141,7 @@
 
     - name: Create WSGI config for loganalyze
       copy:
-        dest: /etc/os-loganalyze/wsgi.conf
+        dest: /etc/os_loganalyze/wsgi.conf
         content: |
           [general]
           filter = SevFilter
