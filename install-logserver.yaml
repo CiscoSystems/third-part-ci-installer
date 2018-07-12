@@ -189,7 +189,12 @@
         hour: 7
         weekday: 6
         job: bash /usr/local/sbin/log_archive_maintenance.sh
-        env: PATH=/usr/bin:/bin:/usr/sbin:/sbin
+
+    - name: Set environment variables for maintenance script
+      cron:
+        env: true
+        name: PATH
+        value: /usr/bin:/bin:/usr/sbin:/sbin
 
     - include_role:
         name: geerlingguy.apache
