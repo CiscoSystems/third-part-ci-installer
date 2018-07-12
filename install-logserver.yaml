@@ -94,6 +94,7 @@
     - name: Install apache2 mod wsgi package for py3
       package:
         name: libapache2-mod-wsgi-py3
+      when: "'python3' in hostvars['ansible_python_interpreter']"
 
     - name: Ensure location for logs exists
       file:
