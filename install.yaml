@@ -11,7 +11,14 @@
       - name: ansible-role-zuul
         repo: https://github.com/openstack/ansible-role-zuul
     nodepool_install_method: git
+    zuul_file_main_yaml_src: # TODO
+    zuul_file_zuul_conf_src: # TODO
+    nodepool_file_nodepool_yaml_src: # TODO
   tasks:
+    - name: Install bubblewrap
+      package:
+        name: bubblewrap
+
     - name: Fetch role
       git:
         repo: "{{item.repo}}"
@@ -21,3 +28,10 @@
     - include_role:
         name: "{{ ansible_env.HOME }}/{{item.name}}"
       with_items: "{{ roles }}"
+
+    - name: Generate Zuul SSH key
+      shell:
+        ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+      args:
+        creates: "~/.ssh/id_rsa"
+      become: zuul
