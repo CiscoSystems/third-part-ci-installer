@@ -133,7 +133,8 @@
         dest: /opt/os-loganalyze
 
     - name: Install os-loganalyze
-      command: pip install /opt/os-loganalyze
+      pip:
+        name: file:///opt/os-loganalyze
 
     - name: Create os-loganalyze config dir
       file:
