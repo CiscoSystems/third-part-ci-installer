@@ -104,3 +104,24 @@
       args:
         creates: "{{ zuul_path_raw.stdout }}/static/status.html"
       become: true
+
+    - name: Slurp public key from zuul
+      slurp:
+        src: "~/.ssh/id_rsa.pub"
+      become: true
+      become_user: zuul
+      register: zuul_public_key_raw
+
+    - name: Decode zuul public key
+      set_fact:
+        zuul_public_key: "{{ zuul_public_key_raw['content'] | b64decode }}"
+
+    - name: Upload zuul key to gerrit
+      pause:
+        prompt: |
+          Please upload this key to your gerrit user:
+
+          {{ zuul_public_key }}
+
+          Then press enter to continue the playbook.
+      when: gerrit_key_already_uploaded | default(false)
