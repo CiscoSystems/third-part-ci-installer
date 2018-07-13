@@ -4,7 +4,7 @@ clouds:
       username: "{{ nodeprovider_username }}"
       password: "{{ nodeprovider_password }}"
       project_name: "{{ nodeprovider_project }}"
-      user_domain_name: Default
-      project_domain_name: Default
+      user_domain_name: "{{ nodeprovider_user_domain | default('Default') }}"
+      project_domain_name: "{{ nodeprovider_project_domain | default('Default') }}"
       auth_url: "http://{{ nodeprovider_ip }}/identity/v3"
     region_name: RegionOne
