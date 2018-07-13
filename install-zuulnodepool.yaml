@@ -35,6 +35,16 @@
         nodepool_task_manager:
           - pre
 
+    - name: Allow passwordless sudo for nodepool
+      lineinfile:
+        dest: /etc/sudoers.d/nodepool
+        create: yes
+        state: present
+        regexp: '^%nodepool'
+        line: '%nodepool ALL=NOPASSWD: ALL'
+        validate: visudo -cf %s
+      become: true
+
     - name: Create config directory for clouds
       file:
         path: "~/.config/openstack"
