@@ -21,7 +21,7 @@ Install Steps:
 5. Make any necessary config changes in ```files/*```
 6. Install zuul & nodepool
    ```
-   ansible-playbook -K install-zuulnodepool.yaml
+   ansible-playbook -K install-zuulnodepool.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
    ```
 7. Install logserver
    ```
