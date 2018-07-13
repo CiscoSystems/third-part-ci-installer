@@ -19,6 +19,7 @@
       package:
         name: bubblewrap
       ignore_errors: true
+      become: true
 
     - name: Fetch role
       git:
