@@ -33,10 +33,17 @@
         nodepool_task_manager:
           - pre
 
+    - name: Create config directory for clouds
+      file:
+        path: "~/.config/openstack"
+        state: directory
+      become: nodepool
+
     - name: Create clouds.yaml for nodepool user
       template:
         src: clouds.yaml
-        dest: "~nodepool/.config/openstack/clouds.yaml"
+        dest: "~/.config/openstack/clouds.yaml"
+      become: nodepool
 
     - include_role:
         name: "{{ ansible_env.HOME }}/{{item.name}}"
