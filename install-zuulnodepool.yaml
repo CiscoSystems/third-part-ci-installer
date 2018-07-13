@@ -55,3 +55,8 @@
       args:
         creates: "~/.ssh/id_rsa"
       become: zuul
+
+    - name: Scan SSH host key for review.openstack.org
+      shell:
+        ssh-keyscan -t rsa review.openstack.org
+      become: zuul
