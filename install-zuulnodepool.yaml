@@ -11,19 +11,32 @@
       - name: ansible-role-zuul
         repo: https://github.com/openstack/ansible-role-zuul
     nodepool_install_method: git
-    zuul_file_main_yaml_src: # TODO
-    zuul_file_zuul_conf_src: # TODO
-    nodepool_file_nodepool_yaml_src: # TODO
+    zuul_file_main_yaml_src: files/main.yaml
+    zuul_file_zuul_conf_src: files/zuul.conf
+    nodepool_file_nodepool_yaml_src: files/nodepool.yaml
   tasks:
     - name: Install bubblewrap
       package:
         name: bubblewrap
+      ignore_errors: true
 
     - name: Fetch role
       git:
         repo: "{{item.repo}}"
         dest: "{{ ansible_env.HOME }}/{{item.name}}"
       with_items: "{{ roles }}"
+
+    - name: Run nodepool pre install phase
+      include_role:
+        name: ansible-role-nodepool
+      var:
+        nodepool_task_manager:
+          - pre
+
+    - name: Create clouds.yaml for nodepool user
+      template:
+        src: clouds.yaml
+        dest: "~nodepool/.config/openstack/clouds.yaml"
 
     - include_role:
         name: "{{ ansible_env.HOME }}/{{item.name}}"
