@@ -1,7 +1,7 @@
 ---
 - hosts: localhost
   vars:
-    roles:
+    ci-roles:
       - name: ansible-role-zookeeper
         repo: https://github.com/openstack/ansible-role-zookeeper
       - name: ansible-role-diskimage-builder
@@ -26,7 +26,7 @@
       git:
         repo: "{{item.repo}}"
         dest: "/etc/ansible/roles/{{item.name}}"
-      with_items: "{{ roles }}"
+      with_items: "{{ ci-roles }}"
       become: true
 
     - name: Run nodepool pre install phase
@@ -62,7 +62,7 @@
 
     - include_role:
         name: "{{item.name}}"
-      with_items: "{{ roles }}"
+      with_items: "{{ ci-roles }}"
 
     - name: Generate Zuul SSH key
       shell:
@@ -87,7 +87,7 @@
 
     - name: Find zuul install location
       shell: |
-        find / -type d -wholename "*zuul/web"
+        find /usr -type d -wholename "*zuul/web"
       register: zuul_path_raw
       become: true
 
