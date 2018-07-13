@@ -60,3 +60,20 @@
       shell:
         ssh-keyscan -t rsa review.openstack.org
       become: zuul
+
+    - name: Find zuul install location
+      shell: |
+        find / -type d -wholename "*zuul/web"
+      register: zuul_path_raw
+
+    - name: Make zuul web static directory
+      file:
+        path: "{{ zuul_path_raw.stdout }}/static"
+        state: directory
+
+    - name: Download and install zuul dashboard files
+      shell: |
+        wget http://tarballs.openstack.org/zuul/zuul-content-latest.tar.gz
+        tar -xzvf zuul-content-latest.tar.gz -C {{ zuul_path_raw.stdout }}/static
+      args:
+        creates: "{{ zuul_path_raw.stdout }}/static/status.html"
