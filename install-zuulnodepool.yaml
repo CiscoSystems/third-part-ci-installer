@@ -63,12 +63,12 @@
 
     - name: Scan SSH host key for review.openstack.org
       shell:
-        ssh-keyscan -t rsa review.openstack.org
+        ssh-keyscan -t rsa -p 29418 review.openstack.org
       register: openstack_keyscan
 
     - name: Add review.openstack.org to zuul known_hosts
       known_hosts:
-        name: review.openstack.org
+        name: "[review.openstack.org]:29418"
         key: "{{ openstack_keyscan.stdout }}"
         path: "~/.ssh/known_hosts"
       become: true
