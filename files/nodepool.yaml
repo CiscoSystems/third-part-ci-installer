@@ -7,6 +7,10 @@ zookeeper-servers:
   - host: localhost
     port: 2181
 
+webapp:
+  port: 8005
+  listen_address: '0.0.0.0'
+
 diskimages:
   - name: ubuntu-xenial
     elements:
