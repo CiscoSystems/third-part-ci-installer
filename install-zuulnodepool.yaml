@@ -31,7 +31,7 @@
     - name: Run nodepool pre install phase
       include_role:
         name: ansible-role-nodepool
-      var:
+      vars:
         nodepool_task_manager:
           - pre
 
