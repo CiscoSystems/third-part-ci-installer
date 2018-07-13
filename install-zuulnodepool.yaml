@@ -39,13 +39,15 @@
       file:
         path: "~/.config/openstack"
         state: directory
-      become: nodepool
+      become: true
+      become_user: nodepool
 
     - name: Create clouds.yaml for nodepool user
       template:
         src: clouds.yaml
         dest: "~/.config/openstack/clouds.yaml"
-      become: nodepool
+      become: true
+      become_user: nodepool
 
     - include_role:
         name: "{{ ansible_env.HOME }}/{{item.name}}"
@@ -56,7 +58,8 @@
         ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
       args:
         creates: "~/.ssh/id_rsa"
-      become: zuul
+      become: true
+      become_user: zuul
 
     - name: Scan SSH host key for review.openstack.org
       shell:
@@ -67,8 +70,9 @@
       known_hosts:
         name: review.openstack.org
         key: "{{ openstack_keyscan.stdout }}"
-        path: "~zuul/.ssh/known_hosts"
-      become: zuul
+        path: "~/.ssh/known_hosts"
+      become: true
+      become_user: zuul
 
     - name: Find zuul install location
       shell: |
