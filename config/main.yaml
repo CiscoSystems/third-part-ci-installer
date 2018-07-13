@@ -4,6 +4,10 @@
 - tenant:
     name: openstack
     source:
+      zuul-git:
+        untrusted-projects:
+          - zuul-base-jobs
+          - zuul-jobs
       gerrit:
         untrusted-projects:
           - openstack/networking-cisco:
@@ -13,4 +17,3 @@
       github:
         config-projects:
           - tehsmash/zuultest-config: {}
-
