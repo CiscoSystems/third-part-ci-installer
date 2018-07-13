@@ -65,11 +65,13 @@
       shell: |
         find / -type d -wholename "*zuul/web"
       register: zuul_path_raw
+      become: true
 
     - name: Make zuul web static directory
       file:
         path: "{{ zuul_path_raw.stdout }}/static"
         state: directory
+      become: true
 
     - name: Download and install zuul dashboard files
       shell: |
@@ -77,3 +79,4 @@
         tar -xzvf zuul-content-latest.tar.gz -C {{ zuul_path_raw.stdout }}/static
       args:
         creates: "{{ zuul_path_raw.stdout }}/static/status.html"
+      become: true
