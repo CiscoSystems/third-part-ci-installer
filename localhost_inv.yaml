@@ -1,0 +1,8 @@
+[localhost]
+localhost ansible_connection=local
+
+[localhost:vars]
+nodeprovider_username=demo
+nodeprovider_password=password
+nodeprovider_project=demo
+nodeprovider_ip=127.0.0.1
