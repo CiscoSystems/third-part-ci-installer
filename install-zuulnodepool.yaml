@@ -24,8 +24,9 @@
     - name: Fetch role
       git:
         repo: "{{item.repo}}"
-        dest: "{{ ansible_env.HOME }}/{{item.name}}"
+        dest: "/etc/ansible/roles/{{item.name}}"
       with_items: "{{ roles }}"
+      become: true
 
     - name: Run nodepool pre install phase
       include_role:
