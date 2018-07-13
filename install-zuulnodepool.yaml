@@ -14,6 +14,7 @@
     zuul_file_main_yaml_src: files/main.yaml
     zuul_file_zuul_conf_src: files/zuul.conf
     nodepool_file_nodepool_yaml_src: files/nodepool.yaml
+    nodepool_file_nodepool_launcher_service_src: files/nodepool-enable-webapp.conf
   tasks:
     - name: Install bubblewrap
       package:
