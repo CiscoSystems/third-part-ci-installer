@@ -210,6 +210,7 @@
         apache_vhosts_filename: "ci-logs.conf"
         apache_global_vhost_settings: |
           Listen 8090
+        apache_options: "+Indexes"
       when: all_in_one_zuul_node | default(false)
 
     - include_role:
