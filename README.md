@@ -6,9 +6,10 @@ Install Steps:
    ```
    sudo apt install python3 python3-pip git
    ```
-2. Install ansible
+2. Install ansible & required ansible roles from galaxy
    ```
    sudo pip3 install ansible
+   ansible-galaxy install geerlingguy.apache
    ```
 3. Clone repository
    ```
@@ -25,6 +26,5 @@ Install Steps:
    ```
 7. Install logserver
    ```
-   ansible-galaxy install geerlingguy.apache
    ansible-playbook -K install-logserver.yaml
    ```
