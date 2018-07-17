@@ -154,3 +154,4 @@
               RewriteRule ^/api/console-stream ws://localhost:9000/api/tenant/openstack/console-stream [P]
               RewriteRule ^/api/(.*)$ http://localhost:9000/api/tenant/openstack/$1 [P]
               RewriteRule ^/(.*)$ http://localhost:9000/$1 [P]
+      become: true
