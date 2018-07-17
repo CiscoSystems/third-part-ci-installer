@@ -126,7 +126,6 @@
           then press enter to continue the playbook.
       when: not (gerrit_key_already_uploaded | default(false))
 
-
     - name: Upload zuul public key to node provider
       pause:
         prompt: |
@@ -136,3 +135,22 @@
 
           then press enter to continue the playbook.
       when: not (openstack_key_already_uploaded | default(false))
+
+    - name: Setup apache to ensure we can access zuul web on port 80
+      include_role:
+        name: geerlingguy.apache
+      vars:
+        apache_vhosts_filename: "ci-main.conf"
+        apache_mods_enabled:
+          - rewrite.load
+          - proxy.load
+          - proxy_http.load
+        apache_remove_default_vhost: true
+        apache_vhosts:
+          - servername: "3ci-zuul.ciscolabs.net"
+            extra_parameters: |
+              RewriteEngine on
+              RewriteRule ^/api/connection/(.*)$ http://localhost:9000/api/connection/$1 [P]
+              RewriteRule ^/api/console-stream ws://localhost:9000/api/tenant/openstack/console-stream [P]
+              RewriteRule ^/api/(.*)$ http://localhost:9000/api/tenant/openstack/$1 [P]
+              RewriteRule ^/(.*)$ http://localhost:9000/$1 [P]

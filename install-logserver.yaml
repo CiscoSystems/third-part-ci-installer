@@ -201,3 +201,31 @@
 
     - include_role:
         name: geerlingguy.apache
+      when: not (all_in_one_zuul_node | default(false))
+
+    - include_role:
+        name: geerlingguy.apache
+      vars:
+        apache_listen_port: 8090
+        apache_vhosts_filename: "ci-logs.conf"
+        apache_global_vhost_settings: |
+          Listen 8090
+      when: all_in_one_zuul_node | default(false)
+
+    - include_role:
+        name: geerlingguy.apache
+      vars:
+        apache_listen_port: 80
+        apache_vhosts_filename: "ci-main.conf"
+        apache_vhosts:
+          - servername: "3ci-log.ciscolabs.net"
+            extra_parameters: |
+              ProxyPass "/logs" "http://localhost:8090/"
+              ProxyPassReverse "/logs" "http://localhost:8090/"
+
+              RewriteEngine on
+              RewriteRule ^/api/connection/(.*)$ http://localhost:9000/api/connection/$1 [P]
+              RewriteRule ^/api/console-stream ws://localhost:9000/api/tenant/openstack/console-stream [P]
+              RewriteRule ^/api/(.*)$ http://localhost:9000/api/tenant/openstack/$1 [P]
+              RewriteRule ^/(.*)$ http://localhost:9000/$1 [P]
+      when: all_in_one_zuul_node | default(false)

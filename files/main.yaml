@@ -5,8 +5,10 @@
     name: openstack
     source:
       zuul-git:
+        config-projects:
+          - zuul-base-jobs:
+              include: job
         untrusted-projects:
-          - zuul-base-jobs
           - zuul-jobs
       gerrit:
         untrusted-projects:
