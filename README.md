@@ -20,11 +20,12 @@ Install Steps:
    cd third-party-ci-installer
    ```
 5. Make any necessary config changes in ```files/*```
-6. Install zuul & nodepool
+6. Edit ```localhost_inv.ini``` to match your environment. (Update nodeprovider_ip/username/password/project)
+7. Install zuul & nodepool
    ```
-   ansible-playbook -K install-zuulnodepool.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
+   ansible-playbook -K -i localhost_inv.ini install-zuulnodepool.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
    ```
-7. Install logserver
+8. Install logserver
    ```
    ansible-playbook -K install-logserver.yaml
    ```
