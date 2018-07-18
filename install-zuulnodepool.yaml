@@ -150,3 +150,15 @@
               RewriteRule ^/api/console-stream ws://localhost:9000/api/tenant/openstack/console-stream [P]
               RewriteRule ^/api/(.*)$ http://localhost:9000/api/tenant/openstack/$1 [P]
               RewriteRule ^/(.*)$ http://localhost:9000/$1 [P]
+
+    - name: Restart zuul-services
+      service:
+        name: "{{ item }}"
+        state: reloaded
+      with-items:
+        - zuul-scheduler
+        - zuul-executor
+        - zuul-fingergw
+        - zuul-merger
+        - zuul-web
+      when: not (updating | default(false))
