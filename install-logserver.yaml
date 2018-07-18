@@ -305,7 +305,7 @@
             serveralias: ".*"
             extra_parameters: |
               RewriteEngine on
-              Redirect "/logs" "/logs/"
+              RewriteRule "^/logs$" "/logs/" [R,L]
               RewriteRule "^/logs/(.*)$" "http://localhost:8090/logs/$1" [P]
               ProxyPassReverse "/logs/" "http://localhost:8090/logs/"
 
