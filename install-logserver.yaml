@@ -86,6 +86,8 @@
       - proxy_http.load
       - wsgi.load
     apache_remove_default_vhost: true
+    apache_options: |
+      +Indexes
   tasks:
     - name: Install apache2 mod wsgi package
       package:
