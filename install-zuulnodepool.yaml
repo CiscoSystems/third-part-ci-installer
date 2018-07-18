@@ -135,7 +135,7 @@
       include_role:
         name: geerlingguy.apache
       vars:
-        apache_vhosts_filename: "ci-main.conf"
+        apache_vhosts_filename: "50-ci-main.conf"
         apache_mods_enabled:
           - rewrite.load
           - proxy.load
@@ -143,6 +143,7 @@
         apache_remove_default_vhost: true
         apache_vhosts:
           - servername: "3ci-zuul.ciscolabs.net"
+            serveralias: ".*"
             extra_parameters: |
               RewriteEngine on
               RewriteRule ^/api/connection/(.*)$ http://localhost:9000/api/connection/$1 [P]
