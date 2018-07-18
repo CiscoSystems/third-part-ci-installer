@@ -113,14 +113,6 @@
         group: "loguser"
         name: "loguser"
 
-    - name: Generate loguser ssh key
-      shell:
-        ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
-      args:
-        creates: "~/.ssh/id_rsa"
-      become: true
-      become_user: loguser
-
     - name: Ensure location for logs exists
       file:
         path: '/srv/static'
