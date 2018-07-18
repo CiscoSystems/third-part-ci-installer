@@ -100,15 +100,40 @@
         name: libapache2-mod-wsgi-py3
       when: "'python3' in hostvars['ansible_python_interpreter']"
 
+    - name: Create group account.
+      become: yes
+      group:
+        name: "loguser"
+
+    - name: Create user account.
+      become: yes
+      user:
+        createhome: yes
+        home: "/var/lib/loguser"
+        group: "loguser"
+        name: "loguser"
+
+    - name: Generate loguser ssh key
+      shell:
+        ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+      args:
+        creates: "~/.ssh/id_rsa"
+      become: true
+      become_user: loguser
+
     - name: Ensure location for logs exists
       file:
         path: '/srv/static'
         state: directory
+        owner: loguser
+        group: loguser
 
     - name: Ensure location for logs exists
       file:
         path: '/srv/static/logs'
         state: directory
+        owner: loguser
+        group: loguser
 
     - name: Setup robots.txt
       copy:
