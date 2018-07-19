@@ -139,7 +139,7 @@
         - libdbus-glib-1-dev
         - libffi-dev
         - libssl-dev
-        - python2-pip
+        - python-pip
 
     - name: Install keyring
       pip:
