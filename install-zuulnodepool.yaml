@@ -163,3 +163,14 @@
         - zuul-merger
         - zuul-web
       when: not (updating | default(false))
+
+    - include_role:
+        name: geerlingguy.mysql
+      vars:
+        mysql_databases:
+          - name: buildsdb
+        mysql_users:
+          - name: buildsuser
+            password: secret
+            host: "localhost"
+            priv: buildsdb.*:ALL
