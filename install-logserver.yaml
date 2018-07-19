@@ -95,11 +95,6 @@
       package:
         name: libapache2-mod-wsgi
 
-    - name: Install apache2 mod wsgi package for py3
-      package:
-        name: libapache2-mod-wsgi-py3
-      when: "'python3' in hostvars['ansible_python_interpreter']"
-
     - name: Create group account.
       become: yes
       group:
@@ -144,10 +139,12 @@
         - libdbus-glib-1-dev
         - libffi-dev
         - libssl-dev
+        - python2-pip
 
     - name: Install keyring
       pip:
         name: keyring
+        executable: pip2
 
     - name: Download os-loganalyze
       git:
@@ -157,6 +154,7 @@
     - name: Install os-loganalyze
       pip:
         name: file:///opt/os-loganalyze
+        executable: pip2
 
     - name: Create os-loganalyze config dir
       file:
