@@ -140,6 +140,7 @@
           - rewrite.load
           - proxy.load
           - proxy_http.load
+          - proxy_wstunnel.load
         apache_remove_default_vhost: true
         apache_vhosts:
           - servername: "3ci-zuul.ciscolabs.net"
