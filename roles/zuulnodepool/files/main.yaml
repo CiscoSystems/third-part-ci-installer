@@ -13,8 +13,13 @@
       gerrit:
         untrusted-projects:
           - exclude:
-              - project
+              - pipeline
               - job
+              - semaphore
+              - project
+              - project-template
+              - nodeset
+              - secret
             projects:
               - openstack/networking-cisco
               - openstack-dev/devstack
