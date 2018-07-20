@@ -1,0 +1,158 @@
+---
+- name: Install bubblewrap
+  package:
+    name: bubblewrap
+  ignore_errors: true
+
+- name: Fetch role
+  git:
+    repo: "{{item.repo}}"
+    dest: "/etc/ansible/roles/{{item.name}}"
+  with_items: "{{ ci_roles }}"
+
+- name: Run nodepool pre install phase
+  include_role:
+    name: ansible-role-nodepool
+  vars:
+    nodepool_task_manager:
+      - pre
+
+- name: Allow passwordless sudo for nodepool
+  lineinfile:
+    dest: /etc/sudoers.d/nodepool
+    create: yes
+    state: present
+    regexp: '^%nodepool'
+    line: '%nodepool ALL=NOPASSWD: ALL'
+    validate: visudo -cf %s
+
+- name: Create config directory for clouds
+  file:
+    path: "~/.config/openstack"
+    state: directory
+  become: true
+  become_user: nodepool
+
+- name: Create clouds.yaml for nodepool user
+  template:
+    src: clouds.yaml
+    dest: "~/.config/openstack/clouds.yaml"
+  become: true
+  become_user: nodepool
+
+- include_role:
+    name: "{{item.name}}"
+  with_items: "{{ ci_roles }}"
+
+- name: Generate Zuul SSH key
+  shell:
+    ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+  args:
+    creates: "~/.ssh/id_rsa"
+  become: true
+  become_user: zuul
+
+- name: Scan SSH host key for review.openstack.org
+  shell:
+    ssh-keyscan -t rsa -p 29418 review.openstack.org
+  register: openstack_keyscan
+
+- name: Add review.openstack.org to zuul known_hosts
+  known_hosts:
+    name: "[review.openstack.org]:29418"
+    key: "{{ openstack_keyscan.stdout }}"
+    path: "~/.ssh/known_hosts"
+  become: true
+  become_user: zuul
+
+- name: Find zuul install location
+  shell: |
+    find /usr -type d -wholename "*zuul/web"
+  register: zuul_path_raw
+
+- name: Make zuul web static directory
+  file:
+    path: "{{ zuul_path_raw.stdout }}/static"
+    state: directory
+
+- name: Download and install zuul dashboard files
+  shell: |
+    wget http://tarballs.openstack.org/zuul/zuul-content-latest.tar.gz
+    tar -xzvf zuul-content-latest.tar.gz -C {{ zuul_path_raw.stdout }}/static
+  args:
+    creates: "{{ zuul_path_raw.stdout }}/static/status.html"
+
+- name: Slurp public key from zuul
+  slurp:
+    src: "~/.ssh/id_rsa.pub"
+  become: true
+  become_user: zuul
+  register: zuul_public_key_raw
+
+- name: Decode zuul public key
+  set_fact:
+    zuul_public_key: "{{ zuul_public_key_raw['content'] | b64decode }}"
+
+- name: Upload zuul key to gerrit
+  pause:
+    prompt: |
+      Please upload this key to your gerrit user:
+
+      {{ zuul_public_key }}
+
+      then press enter to continue the playbook.
+  when: not (gerrit_key_already_uploaded | default(false))
+
+- name: Upload zuul public key to node provider
+  pause:
+    prompt: |
+      Please upload this key to the {{ nodeprovider_username }} user on your node provider:
+
+      {{ zuul_public_key }}
+
+      then press enter to continue the playbook.
+  when: not (openstack_key_already_uploaded | default(false))
+
+- name: Setup apache to ensure we can access zuul web on port 80
+  include_role:
+    name: geerlingguy.apache
+  vars:
+    apache_vhosts_filename: "50-ci-main.conf"
+    apache_mods_enabled:
+      - rewrite.load
+      - proxy.load
+      - proxy_http.load
+      - proxy_wstunnel.load
+    apache_remove_default_vhost: true
+    apache_vhosts:
+      - servername: "3ci-zuul.ciscolabs.net"
+        serveralias: ".*"
+        extra_parameters: |
+          RewriteEngine on
+          RewriteRule ^/api/connection/(.*)$ http://localhost:9000/api/connection/$1 [P]
+          RewriteRule ^/api/console-stream ws://localhost:9000/api/tenant/openstack/console-stream [P]
+          RewriteRule ^/api/(.*)$ http://localhost:9000/api/tenant/openstack/$1 [P]
+          RewriteRule ^/(.*)$ http://localhost:9000/$1 [P]
+
+- name: Restart zuul-services
+  service:
+    name: "{{ item }}"
+    state: reloaded
+  with-items:
+    - zuul-scheduler
+    - zuul-executor
+    - zuul-fingergw
+    - zuul-merger
+    - zuul-web
+  when: not (updating | default(false))
+
+- include_role:
+    name: geerlingguy.mysql
+  vars:
+    mysql_databases:
+      - name: buildsdb
+    mysql_users:
+      - name: buildsuser
+        password: secret
+        host: "localhost"
+        priv: buildsdb.*:ALL

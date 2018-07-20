@@ -14,18 +14,14 @@ Install Steps:
 3. Clone repository
    ```
    git clone https://github.com/CiscoSystems/third-party-ci-installer
-   ```    
+   ```
 4. Change directory
    ```
    cd third-party-ci-installer
    ```
 5. Make any necessary config changes in ```files/*```
-6. Edit ```localhost_inv.ini``` to match your environment (Update nodeprovider_ip/username/password/project). If the logserver is on the same server as zuul and nodepool then ```all_in_one_zuul_node``` should be set to ```True```
-7. Install zuul & nodepool
+6. Edit ```localhost_inv.ini``` to match your environment (Update nodeprovider_ip/username/password/project). If the logserver is on the same server as zuul and nodepool then the services list should include both 'zuul' and 'logserver'
+7. Install
    ```
-   ansible-playbook -K -i localhost_inv.ini install-zuulnodepool.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
-   ```
-8. Install logserver
-   ```
-   ansible-playbook -K -i localhost_inv.ini install-logserver.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
+   ansible-playbook -K -i localhost_inv.ini install.yaml
    ```

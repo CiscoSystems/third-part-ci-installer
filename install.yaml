@@ -1,0 +1,13 @@
+---
+- hosts: localhost
+  become: true
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+  roles:
+    - role: zuulnodepool
+      when: '"zuul" in services'
+    - role: logserver
+      when: '"logserver" in services'
+    - role: apache
+      when: '"logserver" in sevices and "zuul" in services'
