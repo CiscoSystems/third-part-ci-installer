@@ -1,7 +1,7 @@
 ---
 logs_documentroot: "/srv/static/logs"
 apache_vhosts:
-  - servername: "3ci-log.ciscolabs.net"
+  - servername: "logserver"
     serveralias: ".*"
     documentroot: "{{ logs_documentroot }}"
     extra_parameters: |

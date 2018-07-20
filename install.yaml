@@ -3,5 +3,9 @@
   become: true
 
   roles:
-    - zuulnodepool
-    - logserver
+    - role: zuulnodepool
+      when: '"zuul" in services'
+    - role: logserver
+      when: '"logserver" in services'
+    - role: apache
+      when: '"logserver" in sevices and "zuul" in services'
