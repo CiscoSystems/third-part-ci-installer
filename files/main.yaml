@@ -62,6 +62,7 @@
 
       github:
         config-projects:
-          - tehsmash/zuultest-config
+          - CiscoSystems/project-config-third-party-base
         untrusted-projects:
           - CiscoSystems/project-config-third-party
+          - CiscoSystems/project-config-third-party-cinder
