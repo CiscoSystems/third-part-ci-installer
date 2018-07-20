@@ -23,5 +23,5 @@ Install Steps:
 6. Edit ```localhost_inv.ini``` to match your environment (Update nodeprovider_ip/username/password/project). If the logserver is on the same server as zuul and nodepool then the services list should include both 'zuul' and 'logserver'
 7. Install
    ```
-   ansible-playbook -K -i localhost_inv.ini install.yaml -e 'ansible_python_interpreter=/usr/bin/python3'
+   ansible-playbook -K -i localhost_inv.ini install.yaml
    ```
