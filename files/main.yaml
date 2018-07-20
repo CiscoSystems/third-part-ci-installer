@@ -12,10 +12,55 @@
           - zuul-jobs
       gerrit:
         untrusted-projects:
-          - openstack/networking-cisco:
-              exclude:
-                - project
-                - job
+          - exclude:
+              - project
+              - job
+            projects:
+              - openstack/networking-cisco
+	      - openstack-dev/devstack
+	      - openstack-infra/devstack-gate
+	      - openstack-infra/tripleo-ci
+	      - openstack/ceilometer
+	      - openstack/ceilometermiddleware
+	      - openstack/cinder
+	      - openstack/django_openstack_auth
+	      - openstack/glance
+	      - openstack/glance_store
+	      - openstack-infra/glean
+	      - openstack-dev/grenade
+	      - openstack/heat
+	      - openstack/heat-cfntools
+	      - openstack/heat-templates
+	      - openstack/horizon
+	      - openstack/keystone
+	      - openstack/keystoneauth
+	      - openstack/keystoneauth-saml2
+	      - openstack/keystonemiddleware
+	      - openstack/manila
+	      - openstack/manila-ui
+	      - openstack/neutron
+	      - openstack/neutron-fwaas
+	      - openstack/neutron-lbaas
+	      - openstack/neutron-vpnaas
+	      - openstack/nova
+	      - openstack/octavia
+	      - openstack/os-apply-config
+	      - openstack/os-brick
+	      - openstack/os-client-config
+	      - openstack/os-collect-config
+	      - openstack/os-net-config
+	      - openstack/os-refresh-config
+	      - openstack/osc-lib
+	      - openstack-infra/project-config
+	      - openstack/requirements
+	      - openstack/swift
+	      - openstack/tempest
+	      - openstack/tripleo-heat-templates
+	      - openstack/tripleo-image-elements
+	      - openstack/zaqar
+
       github:
         config-projects:
-          - tehsmash/zuultest-config: {}
+          - tehsmash/zuultest-config
+        untrusted-projects:
+          - CiscoSystems/project-config-third-party
