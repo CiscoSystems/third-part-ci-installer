@@ -161,6 +161,15 @@
     - zuul-web
   when: not (updating | default(false))
 
+- name: Restart nodepool-services
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - nodepool-builder
+    - nodepool-launcher
+  when: not (updating | default(false))
+
 - include_role:
     name: geerlingguy.mysql
   vars:
