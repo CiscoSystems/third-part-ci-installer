@@ -49,6 +49,11 @@
     src: zuul.conf
     dest: "/etc/zuul/zuul.conf"
 
+- name: Create main.yaml
+  template:
+    src: main.yaml
+    dest: "/etc/zuul/main.yaml"
+
 - name: Create nodepool.yaml
   template:
     src: nodepool.yaml

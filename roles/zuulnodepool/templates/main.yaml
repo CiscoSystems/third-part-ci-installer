@@ -67,7 +67,6 @@
 
       github:
         config-projects:
-          - CiscoSystems/project-config-third-party-base
+          - {{ config_project }}
         untrusted-projects:
-          - CiscoSystems/project-config-third-party
-          - CiscoSystems/project-config-third-party-cinder
+          - {{ job_project }}
