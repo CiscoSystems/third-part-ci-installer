@@ -11,6 +11,7 @@ Install Steps:
    ```
    sudo pip3 install ansible
    ansible-galaxy install geerlingguy.apache
+   ansible-galaxy install geerlingguy.mysql
    ```
 3. Clone repository
    ```
