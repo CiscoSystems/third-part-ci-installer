@@ -138,7 +138,7 @@
   service:
     name: "{{ item }}"
     state: reloaded
-  with-items:
+  with_items:
     - zuul-scheduler
     - zuul-executor
     - zuul-fingergw
