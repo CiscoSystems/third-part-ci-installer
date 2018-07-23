@@ -10,4 +10,4 @@
     - role: logserver
       when: '"logserver" in services'
     - role: apache
-      when: '"logserver" in sevices and "zuul" in services'
+      when: '"logserver" in services and "zuul" in services'
