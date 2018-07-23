@@ -44,6 +44,11 @@
     name: "{{item.name}}"
   with_items: "{{ ci_roles }}"
 
+- name: Create zuul.conf
+  template:
+    src: zuul.conf
+    dest: "/etc/zuul/zuul.conf"
+
 - name: Generate Zuul SSH key
   shell:
     ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
