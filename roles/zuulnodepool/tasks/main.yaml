@@ -106,7 +106,7 @@
 - name: Upload zuul public key to node provider
   pause:
     prompt: |
-      Please upload this key to the {{ nodeprovider_username }} user on your node provider:
+      Please upload this key to the {{ nodeprovider_username }} user on your node provider...ensure the key is named 'nodepool':
 
       {{ zuul_public_key }}
 
