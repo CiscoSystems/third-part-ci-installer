@@ -25,3 +25,12 @@ Install Steps:
    ```
    ansible-playbook -K -i localhost_inv.ini install.yaml
    ```
+
+
+NOTE:
+If you see an error regarding gearman:
+```
+TASK [ansible-role-zuul : Install gearman logging file.] ***********************************************************************************************************************************************************************************
+fatal: [localhost]: FAILED! => {"changed": false, "checksum": "9222a3bc49518e635aeb3ad9dc4b0e6a9447cd29", "msg": "Unsupported parameters for (copy) module: original_basename Supported parameters include: _original_basename, attributes, backup, checksum, content, delimiter, dest, directory_mode, follow, force, group, local_follow, mode, owner, regexp, remote_src, selevel, serole, setype, seuser, src, unsafe_writes, validate"}  
+```
+Re-run the ansible playbook
