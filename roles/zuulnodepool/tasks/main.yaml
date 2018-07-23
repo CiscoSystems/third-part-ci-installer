@@ -137,7 +137,7 @@
 - name: Restart zuul-services
   service:
     name: "{{ item }}"
-    state: reloaded
+    state: restarted
   with_items:
     - zuul-scheduler
     - zuul-executor
