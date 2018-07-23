@@ -4,6 +4,7 @@ A ansible Zuul v3 + Nodepool installer
 Install Steps:
 1. Install requirements
    ```
+   sudo apt update
    sudo apt install python3 python3-pip git
    ```
 2. Install ansible & required ansible roles from galaxy
