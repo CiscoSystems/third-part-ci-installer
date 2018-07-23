@@ -49,6 +49,11 @@
     src: zuul.conf
     dest: "/etc/zuul/zuul.conf"
 
+- name: Create nodepool.yaml
+  template:
+    src: nodepool.yaml
+    dest: "/etc/nodepool/nodepool.yaml"
+
 - name: Generate Zuul SSH key
   shell:
     ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""

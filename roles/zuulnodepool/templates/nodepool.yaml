@@ -42,4 +42,4 @@ providers:
           - name: ubuntu
             flavor-name: 'm1.small'
             diskimage: ubuntu-xenial
-            key-name: nodepool 
+            key-name: nodepool
