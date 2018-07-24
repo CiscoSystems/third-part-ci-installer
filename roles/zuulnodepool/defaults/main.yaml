@@ -9,7 +9,4 @@ ci_roles:
   - name: ansible-role-zuul
     repo: https://github.com/openstack/ansible-role-zuul
 nodepool_install_method: git
-zuul_file_main_yaml_src: files/main.yaml
-zuul_file_zuul_conf_src: templates/zuul.conf
-nodepool_file_nodepool_yaml_src: files/nodepool.yaml
 nodepool_file_nodepool_launcher_service_config_src: files/nodepool-enable-webapp.conf

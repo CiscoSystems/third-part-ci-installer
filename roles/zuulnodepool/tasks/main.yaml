@@ -16,6 +16,9 @@
   vars:
     nodepool_task_manager:
       - pre
+    nodepool_install_method: "{{ nodepool_install_method }}"
+    nodepool_file_nodepool_yaml_src: "{{ nodepool_file_nodepool_yaml_src }}"
+    nodepool_file_nodepool_launcher_service_config_src: "{{ nodepool_file_nodepool_launcher_service_config_src}}"
 
 - name: Allow passwordless sudo for nodepool
   lineinfile:
@@ -43,6 +46,9 @@
 - include_role:
     name: "{{item.name}}"
   with_items: "{{ ci_roles }}"
+  vars:
+    nodepool_install_method: "{{ nodepool_install_method }}"
+    nodepool_file_nodepool_launcher_service_config_src: "{{ nodepool_file_nodepool_launcher_service_config_src}}"
 
 - name: Create zuul.conf
   template:
