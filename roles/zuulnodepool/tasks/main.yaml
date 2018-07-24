@@ -47,8 +47,8 @@
     name: "{{item.name}}"
   with_items: "{{ ci_roles }}"
   vars:
-    nodepool_install_method: "{{ nodepool_install_method }}"
-    nodepool_file_nodepool_launcher_service_config_src: "{{ nodepool_file_nodepool_launcher_service_config_src}}"
+    nodepool_install_method: "git"
+    nodepool_file_nodepool_launcher_service_config_src: files/nodepool-enable-webapp.conf
 
 - name: Create zuul.conf
   template:

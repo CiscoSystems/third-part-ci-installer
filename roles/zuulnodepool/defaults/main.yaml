@@ -8,5 +8,3 @@ ci_roles:
     repo: https://github.com/openstack/ansible-role-nodepool
   - name: ansible-role-zuul
     repo: https://github.com/openstack/ansible-role-zuul
-nodepool_install_method: git
-nodepool_file_nodepool_launcher_service_config_src: files/nodepool-enable-webapp.conf
