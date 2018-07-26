@@ -1,0 +1,15 @@
+localhost:
+  hosts:
+    localhost:
+      ansible_connection: local
+  vars:
+    nodeprovider_username: admin
+    nodeprovider_password: password
+    nodeprovider_project: demo
+    nodeprovider_ip: 127.0.0.1
+    services:
+      - "zuul"
+      - "logserver"
+    config_project: 'CiscoSystems/project-config-third-party-base'
+    job_project: 'CiscoSystems/project-config-third-party'
+    gerrit_user: 'cisco-ci'

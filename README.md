@@ -21,10 +21,10 @@ Install Steps:
    ```
    cd third-party-ci-installer
    ```
-5. Edit ```localhost_inv.ini``` to match your environment (Update nodeprovider_ip/username/password/project). If the logserver is on the same server as zuul and nodepool then the services list should include both 'zuul' and 'logserver'
+5. Edit ```localhost_inv.yaml``` to match your environment (Update nodeprovider_ip/username/password/project). If the logserver is on the same server as zuul and nodepool then the services list should include both 'zuul' and 'logserver'
 6. Install
    ```
-   ansible-playbook -K -i localhost_inv.ini install.yaml
+   ansible-playbook -K -i localhost_inv.yaml install.yaml
    ```
 
 
