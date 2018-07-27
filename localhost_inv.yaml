@@ -3,10 +3,13 @@ localhost:
     localhost:
       ansible_connection: local
   vars:
-    nodeprovider_username: admin
-    nodeprovider_password: password
-    nodeprovider_project: demo
-    nodeprovider_ip: 127.0.0.1
+    nodeproviders:
+      - name: devstack
+        username: admin
+        password: password
+        project: demo
+        ip: 127.0.0.1
+        flavor: 'm1.small'
     services:
       - "zuul"
       - "logserver"

@@ -30,8 +30,9 @@ labels:
     min-ready: 2
 
 providers:
-  - name: mycloud
-    cloud: mycloud
+{% for provider in nodeproviders %}
+  - name: {{provider.name}}
+    cloud: {{provider.name}}
     diskimages:
       - name: ubuntu-xenial
         config-drive: true
@@ -40,6 +41,7 @@ providers:
         max-servers: 6
         labels:
           - name: ubuntu
-            flavor-name: 'm1.small'
+            flavor-name: '{{provider.flavor}}'
             diskimage: ubuntu-xenial
             key-name: nodepool
+{% endfor %}

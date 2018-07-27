@@ -38,7 +38,7 @@
 
 - name: Create clouds.yaml for nodepool user
   template:
-    src: clouds.yaml
+    src: clouds.yaml.j2
     dest: "~/.config/openstack/clouds.yaml"
   become: true
   become_user: nodepool
@@ -62,7 +62,7 @@
 
 - name: Create nodepool.yaml
   template:
-    src: nodepool.yaml
+    src: nodepool.yaml.j2
     dest: "/etc/nodepool/nodepool.yaml"
 
 - name: Generate Zuul SSH key

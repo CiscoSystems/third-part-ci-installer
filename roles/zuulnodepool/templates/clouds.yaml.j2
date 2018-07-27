@@ -1,0 +1,12 @@
+clouds:
+{% for provider in nodeproviders %}
+  {{ provider.name }}:
+    auth:
+      username: "{{ provider.username }}"
+      password: "{{ provider.password }}"
+      project_name: "{{ provider.project }}"
+      user_domain_name: "{{ provider.user_domain | default('Default') }}"
+      project_domain_name: "{{ provider.project_domain | default('Default') }}"
+      auth_url: "http://{{ provider.ip }}/identity/v3"
+    region_name: RegionOne
+{% endfor %}
