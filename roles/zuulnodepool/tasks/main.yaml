@@ -155,6 +155,17 @@
           RewriteRule ^/api/(.*)$ http://localhost:9000/api/tenant/openstack/$1 [P]
           RewriteRule ^/(.*)$ http://localhost:9000/$1 [P]
 
+- include_role:
+    name: geerlingguy.mysql
+  vars:
+    mysql_databases:
+      - name: buildsdb
+    mysql_users:
+      - name: buildsuser
+        password: secret
+        host: "localhost"
+        priv: buildsdb.*:ALL
+
 - name: Restart zuul-services
   service:
     name: "{{ item }}"
@@ -175,14 +186,3 @@
     - nodepool-builder
     - nodepool-launcher
   when: not (updating | default(false))
-
-- include_role:
-    name: geerlingguy.mysql
-  vars:
-    mysql_databases:
-      - name: buildsdb
-    mysql_users:
-      - name: buildsuser
-        password: secret
-        host: "localhost"
-        priv: buildsdb.*:ALL
