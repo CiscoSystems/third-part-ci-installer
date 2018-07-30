@@ -37,6 +37,7 @@
               - openstack/heat-cfntools
               - openstack/heat-templates
               - openstack/horizon
+              - openstack/ironic
               - openstack/keystone
               - openstack/keystoneauth
               - openstack/keystoneauth-saml2
