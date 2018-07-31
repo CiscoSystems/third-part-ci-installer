@@ -38,7 +38,9 @@
               - openstack/heat-templates
               - openstack/horizon
               - openstack/ironic
+              - openstack/ironic-lib
               - openstack/ironic-python-agent
+              - openstack/ironic-tempest-plugin
               - openstack/keystone
               - openstack/keystoneauth
               - openstack/keystoneauth-saml2
