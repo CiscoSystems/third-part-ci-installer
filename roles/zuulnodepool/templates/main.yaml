@@ -71,6 +71,7 @@
               - openstack/tripleo-image-elements
               - openstack/virtualbmc
               - openstack/zaqar
+              - openstack-infra/zuul-jobs
 
       github:
         config-projects:
