@@ -1,0 +1,5 @@
+---
+labels_min_ready_default:
+  ubuntu: 0
+  centos-7: 0
+labels_min_ready_merged: {{ labels_min_ready_default | combine(labels_min_ready) }}

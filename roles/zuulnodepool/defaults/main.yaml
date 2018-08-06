@@ -8,3 +8,5 @@ ci_roles:
     repo: https://github.com/openstack/ansible-role-nodepool
   - name: ansible-role-zuul
     repo: https://github.com/openstack/ansible-role-zuul
+
+labels_min_ready: {}
