@@ -47,7 +47,9 @@ providers:
         config-drive: true
     pools:
       - name: main
-        max-servers: {% if provider.max_servers is defined %}{{ provider.max_servers }}{% endif %}
+        {%- if provider.max_servers is defined %}
+        max-servers: {{ provider.max_servers }}
+        {%- endif %}
         labels:
           - name: ubuntu
             flavor-name: '{{provider.flavor}}'
