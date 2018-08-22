@@ -3,6 +3,7 @@
 #
 - tenant:
     name: openstack
+    exclude-unprotected-branches: true
     source:
       zuul-git:
         config-projects:
