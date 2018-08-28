@@ -4,6 +4,7 @@
 - tenant:
     name: openstack
     exclude-unprotected-branches: true
+    default-parent: {{ default_parent_job }}
     source:
       zuul-git:
         config-projects:
